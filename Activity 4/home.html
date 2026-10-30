@@ -1,0 +1,603 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#e8f5e9">
+    <meta name="description" content="Meet Miel, a student at Dayap National Highschool Main, and explore science and math together.">
+    <title>Miel | My Learning Corner</title>
+    <style>
+        :root {
+            color-scheme: light;
+            --forest: #164b36;
+            --green: #34764e;
+            --leaf: #78b66c;
+            --text: #203a2b;
+            --muted: #63786a;
+            --line: rgba(29, 77, 51, .14);
+            --white: #fbfdf9;
+            font-family: "Segoe UI", Arial, sans-serif;
+            font-synthesis: none;
+            text-rendering: optimizeLegibility;
+        }
+
+        * { box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+
+        body {
+            min-width: 320px;
+            margin: 0;
+            color: var(--text);
+            background: linear-gradient(135deg, #f7fbf4 0%, #e9f5e6 48%, #d1eacb 100%);
+        }
+
+        a { color: inherit; }
+
+        .container {
+            width: min(1080px, calc(100% - 48px));
+            margin-inline: auto;
+        }
+
+        .site-header {
+            position: sticky;
+            z-index: 5;
+            top: 0;
+            border-bottom: 1px solid var(--line);
+            background: rgba(249, 252, 247, .88);
+            backdrop-filter: blur(14px);
+        }
+
+        .navbar {
+            min-height: 72px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .brand {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            color: var(--forest);
+            font-size: 1.08rem;
+            font-weight: 750;
+            letter-spacing: -.035em;
+            text-decoration: none;
+        }
+
+        .brand-mark {
+            display: grid;
+            width: 37px;
+            height: 37px;
+            place-items: center;
+            border-radius: 13px;
+            color: white;
+            background: var(--forest);
+            font-family: Georgia, "Times New Roman", serif;
+            font-size: 1.1rem;
+        }
+
+        .brand-dot { color: var(--leaf); }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 30px;
+        }
+
+        .nav-links a {
+            color: #526b5a;
+            font-size: .9rem;
+            font-weight: 600;
+            text-decoration: none;
+            transition: color .2s ease;
+        }
+
+        .nav-links a:hover { color: var(--green); }
+
+        .menu-toggle {
+            display: none;
+            width: 42px;
+            height: 42px;
+            padding: 9px;
+            border: 1px solid var(--line);
+            border-radius: 12px;
+            color: var(--forest);
+            background: transparent;
+            cursor: pointer;
+        }
+
+        .menu-toggle span {
+            display: block;
+            height: 2px;
+            margin: 5px 0;
+            border-radius: 2px;
+            background: currentColor;
+        }
+
+        .hero {
+            min-height: 570px;
+            display: grid;
+            grid-template-columns: 1.1fr .9fr;
+            align-items: center;
+            gap: 48px;
+            padding-block: 72px;
+            scroll-margin-top: 80px;
+        }
+
+        .eyebrow {
+            display: inline-flex;
+            align-items: center;
+            gap: 9px;
+            margin-bottom: 19px;
+            color: var(--green);
+            font-size: .73rem;
+            font-weight: 750;
+            letter-spacing: .13em;
+        }
+
+        .eyebrow::before {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--leaf);
+            content: "";
+        }
+
+        h1, h2, h3, p { margin-top: 0; }
+
+        h1 {
+            margin-bottom: 20px;
+            color: var(--forest);
+            font-family: Georgia, "Times New Roman", serif;
+            font-size: clamp(3.7rem, 8vw, 6rem);
+            font-weight: 400;
+            letter-spacing: -.07em;
+            line-height: .96;
+        }
+
+        h1 span { color: #6fa463; }
+
+        .intro {
+            max-width: 500px;
+            margin-bottom: 27px;
+            color: var(--muted);
+            font-size: 1.05rem;
+            line-height: 1.8;
+        }
+
+        .button {
+            display: inline-flex;
+            min-height: 48px;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            padding: 0 20px;
+            border-radius: 999px;
+            color: #fff;
+            background: var(--forest);
+            font-size: .91rem;
+            font-weight: 650;
+            text-decoration: none;
+            transition: transform .2s ease, background .2s ease;
+        }
+
+        .button:hover { transform: translateY(-2px); background: var(--green); }
+
+        .profile-art {
+            position: relative;
+            min-height: 365px;
+            display: grid;
+            place-items: center;
+        }
+
+        .orbit {
+            position: absolute;
+            width: min(335px, 88%);
+            aspect-ratio: 1;
+            border: 1px solid rgba(49, 112, 71, .19);
+            border-radius: 50%;
+            box-shadow: 0 0 0 25px rgba(255, 255, 255, .18), 0 0 0 50px rgba(255, 255, 255, .11);
+        }
+
+        .profile-card {
+            position: relative;
+            z-index: 1;
+            width: min(300px, 78%);
+            min-height: 300px;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            overflow: hidden;
+            padding: 27px;
+            border: 1px solid rgba(255, 255, 255, .72);
+            border-radius: 25px;
+            background:
+                radial-gradient(ellipse at 70% 27%, rgba(248, 255, 228, .85), transparent 28%),
+                linear-gradient(150deg, #b7dba8 0%, #77b477 52%, #378057 100%);
+            box-shadow: 0 24px 58px rgba(37, 90, 51, .2);
+            transform: rotate(2deg);
+        }
+
+        .profile-card::before,
+        .profile-card::after {
+            position: absolute;
+            top: 43px;
+            right: 50px;
+            width: 120px;
+            height: 160px;
+            border-radius: 100% 0 100% 0;
+            background: linear-gradient(145deg, rgba(242, 251, 218, .88), rgba(229, 244, 199, .15));
+            content: "";
+            transform: rotate(20deg);
+        }
+
+        .profile-card::after {
+            top: 83px;
+            right: 105px;
+            width: 70px;
+            height: 111px;
+            opacity: .72;
+            transform: rotate(-35deg);
+        }
+
+        .card-label, .card-name, .card-school { position: relative; z-index: 1; }
+        .card-label {
+            margin-bottom: 9px;
+            color: rgba(255, 255, 255, .85);
+            font-size: .68rem;
+            font-weight: 750;
+            letter-spacing: .13em;
+        }
+
+        .card-name {
+            margin-bottom: 8px;
+            color: white;
+            font-family: Georgia, "Times New Roman", serif;
+            font-size: 2.5rem;
+            font-weight: 400;
+            letter-spacing: -.04em;
+        }
+
+        .card-school {
+            max-width: 220px;
+            margin-bottom: 0;
+            color: rgba(255, 255, 255, .9);
+            font-size: .85rem;
+            line-height: 1.5;
+        }
+
+        .section {
+            padding-block: 78px;
+            scroll-margin-top: 72px;
+        }
+
+        .about {
+            border-top: 1px solid var(--line);
+            background: rgba(255, 255, 255, .3);
+        }
+
+        .section-label {
+            margin-bottom: 10px;
+            color: var(--green);
+            font-size: .73rem;
+            font-weight: 750;
+            letter-spacing: .12em;
+            text-transform: uppercase;
+        }
+
+        h2 {
+            margin-bottom: 13px;
+            color: var(--forest);
+            font-family: Georgia, "Times New Roman", serif;
+            font-size: clamp(2.2rem, 4.5vw, 3.15rem);
+            font-weight: 400;
+            letter-spacing: -.05em;
+            line-height: 1.08;
+        }
+
+        .section-intro {
+            max-width: 620px;
+            margin-bottom: 29px;
+            color: var(--muted);
+            line-height: 1.75;
+        }
+
+        .info-grid, .fact-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 17px;
+        }
+
+        .info-card, .fact-card {
+            padding: 23px;
+            border: 1px solid var(--line);
+            border-radius: 17px;
+            background: rgba(255, 255, 255, .68);
+        }
+
+        .info-card .label {
+            display: block;
+            margin-bottom: 8px;
+            color: var(--green);
+            font-size: .75rem;
+            font-weight: 750;
+            letter-spacing: .08em;
+            text-transform: uppercase;
+        }
+
+        .info-card strong { color: var(--forest); font-size: 1.02rem; }
+
+        .facts-heading {
+            display: flex;
+            align-items: end;
+            justify-content: space-between;
+            gap: 24px;
+            margin-bottom: 27px;
+        }
+
+        .facts-heading h2 { margin-bottom: 0; }
+
+        .fact-card {
+            min-height: 188px;
+            background: rgba(255, 255, 255, .55);
+        }
+
+        .fact-type {
+            display: inline-block;
+            margin-bottom: 15px;
+            padding: 6px 10px;
+            border-radius: 999px;
+            color: var(--green);
+            background: #e7f3e2;
+            font-size: .72rem;
+            font-weight: 750;
+            letter-spacing: .04em;
+        }
+
+        .fact-card h3 {
+            margin-bottom: 9px;
+            color: var(--forest);
+            font-family: Georgia, "Times New Roman", serif;
+            font-size: 1.28rem;
+            font-weight: 400;
+        }
+
+        .fact-card p {
+            margin-bottom: 0;
+            color: var(--muted);
+            font-size: .91rem;
+            line-height: 1.7;
+        }
+
+        .fact-button {
+            min-height: 42px;
+            padding-inline: 16px;
+            border: 1px solid rgba(23, 75, 52, .2);
+            border-radius: 999px;
+            color: var(--forest);
+            background: rgba(255, 255, 255, .5);
+            font: inherit;
+            font-size: .85rem;
+            font-weight: 650;
+            cursor: pointer;
+            transition: background .2s ease, border-color .2s ease;
+        }
+
+        .fact-button:hover { border-color: var(--green); background: white; }
+        .fact-button:disabled { cursor: default; opacity: .65; }
+
+        .site-footer {
+            padding-block: 22px;
+            border-top: 1px solid var(--line);
+            color: var(--muted);
+            font-size: .83rem;
+        }
+
+        .footer-inner {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 16px;
+        }
+
+        .footer-inner p { margin: 0; }
+        :focus-visible { outline: 3px solid #76a969; outline-offset: 4px; }
+
+        @media (max-width: 720px) {
+            .container { width: min(100% - 36px, 560px); }
+            .navbar { min-height: 66px; }
+            .menu-toggle { display: block; }
+
+            .nav-links {
+                position: absolute;
+                top: calc(100% + 1px);
+                right: 18px;
+                left: 18px;
+                display: none;
+                align-items: stretch;
+                gap: 2px;
+                padding: 11px;
+                border: 1px solid var(--line);
+                border-radius: 16px;
+                background: var(--white);
+                box-shadow: 0 15px 32px rgba(31, 65, 42, .12);
+            }
+
+            .nav-links.is-open { display: flex; flex-direction: column; }
+            .nav-links a { padding: 12px; }
+            .hero { min-height: auto; grid-template-columns: 1fr; gap: 8px; padding-block: 61px 48px; }
+            h1 { font-size: clamp(3.4rem, 15vw, 5rem); }
+            .profile-art { min-height: 330px; }
+            .profile-card { min-height: 275px; }
+            .section { padding-block: 60px; }
+            .info-grid, .fact-grid { grid-template-columns: 1fr; }
+            .facts-heading { align-items: flex-start; flex-direction: column; }
+        }
+
+        @media (max-width: 450px) {
+            .footer-inner { align-items: flex-start; flex-direction: column; }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                scroll-behavior: auto !important;
+                transition-duration: .01ms !important;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="site-header">
+        <nav class="navbar container" aria-label="Main navigation">
+            <a class="brand" href="#home" aria-label="Miel's homepage">
+                <span class="brand-mark" aria-hidden="true">M</span>
+                <span>Miel<span class="brand-dot">.</span></span>
+            </a>
+            <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="nav-links" aria-label="Open navigation">
+                <span></span>
+                <span></span>
+            </button>
+            <div class="nav-links" id="nav-links">
+                <a href="#home" aria-current="page">Home</a>
+                <a href="#about">About me</a>
+                <a href="#science-math">Science &amp; math</a>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <section class="hero container" id="home">
+            <div>
+                <p class="eyebrow">WELCOME TO MY LEARNING CORNER</p>
+                <h1>Hi, I'm <span>Miel.</span></h1>
+                <p class="intro">I'm a student at Dayap National Highschool Main. This is my little corner of the web, where I share a bit about myself and explore some fascinating ideas in science and math.</p>
+                <a class="button" href="#about">Get to know me <span aria-hidden="true">↓</span></a>
+            </div>
+            <div class="profile-art" role="img" aria-label="Green, nature-inspired illustration introducing Miel">
+                <div class="orbit" aria-hidden="true"></div>
+                <div class="profile-card" aria-hidden="true">
+                    <span class="card-label">STUDENT &amp; CURIOUS LEARNER</span>
+                    <span class="card-name">Hello,<br>Miel!</span>
+                    <p class="card-school">Dayap National Highschool Main</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="about section" id="about">
+            <div class="container">
+                <p class="section-label">A little about me</p>
+                <h2>Learning, one idea at a time.</h2>
+                <p class="section-intro">I'm Miel, a student at Dayap National Highschool Main. I made this page to introduce myself and share some interesting things to learn about the world.</p>
+                <div class="info-grid">
+                    <article class="info-card">
+                        <span class="label">My name</span>
+                        <strong>Miel</strong>
+                    </article>
+                    <article class="info-card">
+                        <span class="label">My school</span>
+                        <strong>Dayap National Highschool Main</strong>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <section class="section container" id="science-math">
+            <div class="facts-heading">
+                <div>
+                    <p class="section-label">Curiosity corner</p>
+                    <h2>Science &amp; math facts</h2>
+                </div>
+                <button class="fact-button" id="new-fact" type="button">Show me another fact ↗</button>
+            </div>
+            <div class="fact-grid" aria-live="polite" aria-atomic="true">
+                <article class="fact-card">
+                    <span class="fact-type" id="science-label">Science</span>
+                    <h3 id="science-title">A day on Venus</h3>
+                    <p id="science-fact">Venus takes about 243 Earth days to rotate once on its axis, but about 225 Earth days to orbit the Sun.</p>
+                </article>
+                <article class="fact-card">
+                    <span class="fact-type" id="math-label">Math</span>
+                    <h3 id="math-title">A surprising decimal</h3>
+                    <p id="math-fact">The repeating decimal 0.999... is exactly equal to 1, not just very close to it.</p>
+                </article>
+            </div>
+        </section>
+    </main>
+
+    <footer class="site-footer">
+        <div class="footer-inner container">
+            <a class="brand" href="#home">
+                <span class="brand-mark" aria-hidden="true">M</span>
+                <span>Miel<span class="brand-dot">.</span></span>
+            </a>
+            <p>Keep asking questions and stay curious.</p>
+            <p>&copy; <span id="current-year"></span> Miel</p>
+        </div>
+    </footer>
+
+    <script>
+        const menuToggle = document.querySelector(".menu-toggle");
+        const navLinks = document.querySelector("#nav-links");
+        const scienceFacts = [
+            {
+                title: "A day on Venus",
+                text: "Venus takes about 243 Earth days to rotate once on its axis, but about 225 Earth days to orbit the Sun."
+            },
+            {
+                title: "Light travels incredibly fast",
+                text: "In a vacuum, light travels at about 299,792 kilometers per second."
+            },
+            {
+                title: "Water can be less dense as a solid",
+                text: "Ice floats on liquid water because its solid crystal structure makes it less dense."
+            }
+        ];
+        const mathFacts = [
+            {
+                title: "A surprising decimal",
+                text: "The repeating decimal 0.999... is exactly equal to 1, not just very close to it."
+            },
+            {
+                title: "A circle's special ratio",
+                text: "The number pi (π) is the ratio of a circle's circumference to its diameter."
+            },
+            {
+                title: "A googol is enormous",
+                text: "A googol is the number 1 followed by 100 zeros."
+            }
+        ];
+
+        menuToggle.addEventListener("click", () => {
+            const isOpen = menuToggle.getAttribute("aria-expanded") === "true";
+            menuToggle.setAttribute("aria-expanded", String(!isOpen));
+            menuToggle.setAttribute("aria-label", isOpen ? "Open navigation" : "Close navigation");
+            navLinks.classList.toggle("is-open", !isOpen);
+        });
+
+        navLinks.addEventListener("click", (event) => {
+            if (event.target.closest("a")) {
+                navLinks.classList.remove("is-open");
+                menuToggle.setAttribute("aria-expanded", "false");
+                menuToggle.setAttribute("aria-label", "Open navigation");
+            }
+        });
+
+        function showRandomFact(facts, previousTitle) {
+            const choices = facts.filter((fact) => fact.title !== previousTitle);
+            return choices[Math.floor(Math.random() * choices.length)];
+        }
+
+        document.querySelector("#new-fact").addEventListener("click", () => {
+            const science = showRandomFact(scienceFacts, document.querySelector("#science-title").textContent);
+            const math = showRandomFact(mathFacts, document.querySelector("#math-title").textContent);
+            document.querySelector("#science-title").textContent = science.title;
+            document.querySelector("#science-fact").textContent = science.text;
+            document.querySelector("#math-title").textContent = math.title;
+            document.querySelector("#math-fact").textContent = math.text;
+        });
+
+        document.querySelector("#current-year").textContent = new Date().getFullYear();
+    </script>
+</body>
+</html>

@@ -1,0 +1,595 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#e8f5e4">
+    <meta name="description" content="Explore fun science and math activities, surprising facts, and little experiments for curious minds.">
+    <title>Explore | Miel's Science &amp; Math Corner</title>
+    <style>
+        :root {
+            color-scheme: light;
+            --forest: #174a35;
+            --green: #34754c;
+            --leaf: #76b66b;
+            --ink: #203a2c;
+            --muted: #607668;
+            --line: rgba(26, 76, 48, .14);
+            --paper: #fbfdf8;
+            font-family: "Segoe UI", Arial, sans-serif;
+            font-synthesis: none;
+            text-rendering: optimizeLegibility;
+        }
+
+        * { box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+
+        body {
+            min-width: 320px;
+            margin: 0;
+            color: var(--ink);
+            background: linear-gradient(135deg, #f7fbf4 0%, #e8f5e4 48%, #d2eacb 100%);
+        }
+
+        a { color: inherit; }
+
+        .container {
+            width: min(1080px, calc(100% - 48px));
+            margin-inline: auto;
+        }
+
+        .site-header {
+            position: sticky;
+            z-index: 5;
+            top: 0;
+            border-bottom: 1px solid var(--line);
+            background: rgba(250, 252, 247, .9);
+            backdrop-filter: blur(14px);
+        }
+
+        .navbar {
+            min-height: 72px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .brand {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            color: var(--forest);
+            font-size: 1.08rem;
+            font-weight: 750;
+            letter-spacing: -.04em;
+            text-decoration: none;
+        }
+
+        .brand-mark {
+            display: grid;
+            width: 37px;
+            height: 37px;
+            place-items: center;
+            border-radius: 13px;
+            color: #fff;
+            background: var(--forest);
+            font-size: 1.1rem;
+        }
+
+        .brand-dot { color: var(--leaf); }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 29px;
+        }
+
+        .nav-links a {
+            color: #526b59;
+            font-size: .9rem;
+            font-weight: 600;
+            text-decoration: none;
+            transition: color .2s ease, background .2s ease;
+        }
+
+        .nav-links a:hover,
+        .nav-links a[aria-current="page"] { color: var(--green); }
+
+        .menu-toggle {
+            display: none;
+            width: 42px;
+            height: 42px;
+            padding: 9px;
+            border: 1px solid var(--line);
+            border-radius: 12px;
+            color: var(--forest);
+            background: transparent;
+            cursor: pointer;
+        }
+
+        .menu-toggle span {
+            display: block;
+            height: 2px;
+            margin: 5px 0;
+            border-radius: 2px;
+            background: currentColor;
+        }
+
+        .hero {
+            min-height: 455px;
+            display: grid;
+            grid-template-columns: 1.05fr .95fr;
+            align-items: center;
+            gap: 40px;
+            padding-block: 68px;
+        }
+
+        .eyebrow {
+            display: inline-flex;
+            align-items: center;
+            gap: 9px;
+            margin-bottom: 18px;
+            color: var(--green);
+            font-size: .73rem;
+            font-weight: 750;
+            letter-spacing: .13em;
+        }
+
+        .eyebrow::before {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--leaf);
+            content: "";
+        }
+
+        h1, h2, h3, p { margin-top: 0; }
+
+        h1 {
+            max-width: 570px;
+            margin-bottom: 19px;
+            color: var(--forest);
+            font-family: Georgia, "Times New Roman", serif;
+            font-size: clamp(3.15rem, 7vw, 5.1rem);
+            font-weight: 400;
+            letter-spacing: -.065em;
+            line-height: .98;
+        }
+
+        h1 em { color: #6da365; font-weight: 400; }
+
+        .hero-copy {
+            max-width: 475px;
+            margin-bottom: 25px;
+            color: var(--muted);
+            font-size: 1.02rem;
+            line-height: 1.8;
+        }
+
+        .button {
+            display: inline-flex;
+            min-height: 47px;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            padding: 0 19px;
+            border-radius: 999px;
+            color: #fff;
+            background: var(--forest);
+            font-size: .89rem;
+            font-weight: 650;
+            text-decoration: none;
+            transition: transform .2s ease, background .2s ease;
+        }
+
+        .button:hover { transform: translateY(-2px); background: var(--green); }
+
+        .hero-art {
+            position: relative;
+            min-height: 325px;
+            display: grid;
+            place-items: center;
+        }
+
+        .orbit {
+            position: absolute;
+            width: min(295px, 85%);
+            aspect-ratio: 1;
+            border: 1px solid rgba(49, 113, 72, .2);
+            border-radius: 50%;
+            box-shadow: 0 0 0 23px rgba(255, 255, 255, .18), 0 0 0 46px rgba(255, 255, 255, .12);
+        }
+
+        .hero-card {
+            position: relative;
+            z-index: 1;
+            width: min(285px, 78%);
+            min-height: 273px;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            overflow: hidden;
+            padding: 26px;
+            border: 1px solid rgba(255, 255, 255, .72);
+            border-radius: 24px;
+            background:
+                radial-gradient(circle at 71% 27%, rgba(248, 255, 224, .82) 0 8%, transparent 9%),
+                radial-gradient(circle at 67% 30%, rgba(255, 255, 255, .28), transparent 32%),
+                linear-gradient(150deg, #b8dca5 0%, #77b577 52%, #337a52 100%);
+            box-shadow: 0 22px 52px rgba(36, 87, 50, .2);
+            transform: rotate(2deg);
+        }
+
+        .hero-card::before,
+        .hero-card::after {
+            position: absolute;
+            top: 35px;
+            right: 45px;
+            width: 106px;
+            height: 106px;
+            border: 1px solid rgba(255, 255, 255, .53);
+            border-radius: 50%;
+            content: "";
+        }
+
+        .hero-card::after {
+            top: 52px;
+            right: 62px;
+            width: 72px;
+            height: 72px;
+            background: rgba(247, 255, 227, .15);
+        }
+
+        .card-kicker, .card-title, .card-note { position: relative; z-index: 1; }
+
+        .card-kicker {
+            margin-bottom: 9px;
+            color: rgba(255, 255, 255, .84);
+            font-size: .67rem;
+            font-weight: 750;
+            letter-spacing: .13em;
+        }
+
+        .card-title {
+            margin-bottom: 8px;
+            color: white;
+            font-family: Georgia, "Times New Roman", serif;
+            font-size: 2.1rem;
+            font-weight: 400;
+            letter-spacing: -.04em;
+            line-height: 1.03;
+        }
+
+        .card-note { margin-bottom: 0; color: rgba(255, 255, 255, .88); font-size: .83rem; }
+
+        .section {
+            padding-block: 67px 82px;
+            scroll-margin-top: 74px;
+        }
+
+        .offers {
+            border-top: 1px solid var(--line);
+            background: rgba(255, 255, 255, .3);
+        }
+
+        .section-heading { margin-bottom: 27px; }
+
+        .section-kicker {
+            margin-bottom: 9px;
+            color: var(--green);
+            font-size: .73rem;
+            font-weight: 750;
+            letter-spacing: .12em;
+            text-transform: uppercase;
+        }
+
+        h2 {
+            margin-bottom: 0;
+            color: var(--forest);
+            font-family: Georgia, "Times New Roman", serif;
+            font-size: clamp(2.1rem, 4.5vw, 3rem);
+            font-weight: 400;
+            letter-spacing: -.05em;
+            line-height: 1.08;
+        }
+
+        .offer-grid, .fact-grid {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 17px;
+        }
+
+        .offer-card, .fact-card {
+            padding: 23px;
+            border: 1px solid var(--line);
+            border-radius: 18px;
+            background: rgba(255, 255, 255, .69);
+        }
+
+        .offer-icon {
+            display: grid;
+            width: 42px;
+            height: 42px;
+            margin-bottom: 19px;
+            place-items: center;
+            border-radius: 14px;
+            color: var(--green);
+            background: #e8f4e2;
+            font-size: 1.25rem;
+        }
+
+        .offer-card h3, .fact-card h3 {
+            margin-bottom: 9px;
+            color: var(--forest);
+            font-family: Georgia, "Times New Roman", serif;
+            font-size: 1.3rem;
+            font-weight: 400;
+            line-height: 1.2;
+        }
+
+        .offer-card p, .fact-card p {
+            margin-bottom: 0;
+            color: var(--muted);
+            font-size: .9rem;
+            line-height: 1.72;
+        }
+
+        .fact-section { padding-bottom: 86px; }
+
+        .fact-card { min-height: 190px; background: rgba(255, 255, 255, .53); }
+
+        .fact-tag {
+            display: inline-block;
+            margin-bottom: 15px;
+            padding: 6px 10px;
+            border-radius: 999px;
+            color: var(--green);
+            background: #e8f4e2;
+            font-size: .7rem;
+            font-weight: 750;
+        }
+
+        .surprise-panel {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 24px;
+            margin-top: 18px;
+            padding: 22px 24px;
+            border: 1px solid var(--line);
+            border-radius: 18px;
+            background: rgba(255, 255, 255, .62);
+        }
+
+        .surprise-copy { margin-bottom: 0; color: var(--muted); line-height: 1.65; }
+        .surprise-copy strong { color: var(--forest); }
+
+        .surprise-button {
+            flex-shrink: 0;
+            min-height: 43px;
+            padding: 0 16px;
+            border: 1px solid rgba(23, 74, 53, .2);
+            border-radius: 999px;
+            color: var(--forest);
+            background: #fff;
+            font: inherit;
+            font-size: .84rem;
+            font-weight: 650;
+            cursor: pointer;
+            transition: background .2s ease, transform .2s ease;
+        }
+
+        .surprise-button:hover { transform: translateY(-1px); background: #f0f8ec; }
+
+        .site-footer {
+            padding-block: 22px;
+            border-top: 1px solid var(--line);
+            color: var(--muted);
+            font-size: .82rem;
+        }
+
+        .footer-inner {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 16px;
+        }
+
+        .footer-inner p { margin: 0; }
+        :focus-visible { outline: 3px solid #75a969; outline-offset: 4px; }
+
+        @media (max-width: 760px) {
+            .container { width: min(100% - 36px, 560px); }
+            .navbar { min-height: 66px; }
+            .menu-toggle { display: block; }
+
+            .nav-links {
+                position: absolute;
+                top: calc(100% + 1px);
+                right: 18px;
+                left: 18px;
+                display: none;
+                align-items: stretch;
+                gap: 2px;
+                padding: 11px;
+                border: 1px solid var(--line);
+                border-radius: 16px;
+                background: var(--paper);
+                box-shadow: 0 15px 32px rgba(31, 65, 42, .12);
+            }
+
+            .nav-links.is-open { display: flex; flex-direction: column; }
+            .nav-links a { padding: 12px; }
+            .hero { min-height: auto; grid-template-columns: 1fr; gap: 5px; padding-block: 58px 46px; }
+            h1 { font-size: clamp(3.1rem, 14vw, 4.8rem); }
+            .hero-art { min-height: 305px; }
+            .hero-card { min-height: 250px; }
+            .section { padding-block: 56px 65px; }
+            .offer-grid, .fact-grid { grid-template-columns: 1fr; }
+            .fact-card { min-height: 0; }
+        }
+
+        @media (max-width: 490px) {
+            .surprise-panel { align-items: flex-start; flex-direction: column; }
+            .footer-inner { align-items: flex-start; flex-direction: column; }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                scroll-behavior: auto !important;
+                transition-duration: .01ms !important;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="site-header">
+        <nav class="navbar container" aria-label="Main navigation">
+            <a class="brand" href="home.html" aria-label="Miel's home page">
+                <span class="brand-mark" aria-hidden="true">M</span>
+                <span>Miel<span class="brand-dot">.</span></span>
+            </a>
+            <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="nav-links" aria-label="Open navigation">
+                <span></span>
+                <span></span>
+            </button>
+            <div class="nav-links" id="nav-links">
+                <a href="home.html">Home</a>
+                <a href="blogs.html">Blogs</a>
+                <a href="services.html" aria-current="page">Services</a>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <section class="hero container" id="home">
+            <div>
+                <p class="eyebrow">WELCOME TO THE CURIOSITY LAB</p>
+                <h1>Science gets<br><em>strange.</em></h1>
+                <p class="hero-copy">Explore the wonderfully weird side of science and math. Pick a curiosity, follow the question, and see where the facts take you!</p>
+                <a class="button" href="#explore">Explore the activities <span aria-hidden="true">↓</span></a>
+            </div>
+            <div class="hero-art" aria-hidden="true">
+                <div class="orbit"></div>
+                <div class="hero-card">
+                    <span class="card-kicker">CURIOSITY: ACTIVATED</span>
+                    <span class="card-title">Ask a question.<br>Find a wonder.</span>
+                    <p class="card-note">The universe has a few surprises.</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="offers section" id="explore">
+            <div class="container">
+                <div class="section-heading">
+                    <p class="section-kicker">Your curiosity menu</p>
+                    <h2>Choose your next rabbit hole.</h2>
+                </div>
+                <div class="offer-grid">
+                    <article class="offer-card">
+                        <div class="offer-icon" aria-hidden="true">✦</div>
+                        <h3>Space oddities</h3>
+                        <p>Explore peculiar planets, extreme stars, and the surprising scale of our universe.</p>
+                    </article>
+                    <article class="offer-card">
+                        <div class="offer-icon" aria-hidden="true">π</div>
+                        <h3>Math mind-benders</h3>
+                        <p>Meet patterns, puzzles, and number facts that make your brain do a double take.</p>
+                    </article>
+                    <article class="offer-card">
+                        <div class="offer-icon" aria-hidden="true">❋</div>
+                        <h3>Life's weird wonders</h3>
+                        <p>Discover surprising animal abilities and amazing details from the natural world.</p>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <section class="fact-section section container" id="trivia">
+            <div class="section-heading">
+                <p class="section-kicker">A few delightfully odd facts</p>
+                <h2>Real life is pretty unbelievable.</h2>
+            </div>
+            <div class="fact-grid">
+                <article class="fact-card">
+                    <span class="fact-tag">SPACE</span>
+                    <h3>Saturn would float—hypothetically!</h3>
+                    <p>Saturn's average density is lower than water's. There isn't an ocean big enough to hold it, but the comparison is still wild.</p>
+                </article>
+                <article class="fact-card">
+                    <span class="fact-tag">MATH</span>
+                    <h3>Some infinities are bigger than others</h3>
+                    <p>The whole numbers never end, but the real numbers cannot be listed in a sequence. Mathematicians call their sizes different infinities.</p>
+                </article>
+                <article class="fact-card">
+                    <span class="fact-tag">PHYSICS</span>
+                    <h3>Lightning can outheat the Sun's surface</h3>
+                    <p>A lightning channel can reach around 30,000 kelvins, while the Sun's visible surface is about 5,800 kelvins.</p>
+                </article>
+            </div>
+            <div class="surprise-panel">
+                <p class="surprise-copy" id="surprise-fact" aria-live="polite"><strong>Need another brain-twister?</strong> Click the button for a surprise science or math fact.</p>
+                <button class="surprise-button" id="surprise-button" type="button">Surprise me ↗</button>
+            </div>
+        </section>
+    </main>
+
+    <footer class="site-footer">
+        <div class="footer-inner container">
+            <a class="brand" href="home.html">
+                <span class="brand-mark" aria-hidden="true">M</span>
+                <span>Miel<span class="brand-dot">.</span></span>
+            </a>
+            <p>Keep asking questions. Stay curious.</p>
+            <p>&copy; <span id="current-year"></span> Miel</p>
+        </div>
+    </footer>
+
+    <script>
+        const menuToggle = document.querySelector(".menu-toggle");
+        const navLinks = document.querySelector("#nav-links");
+        const surpriseFact = document.querySelector("#surprise-fact");
+        const surpriseButton = document.querySelector("#surprise-button");
+        const extraFacts = [
+            { category: "Science", text: "Octopuses have three hearts: two pump blood to the gills, and one pumps it to the rest of the body." },
+            { category: "Math", text: "The repeating decimal 0.999... is exactly equal to 1—not just very close." },
+            { category: "Science", text: "A teaspoon of neutron-star material would have a mass of roughly a billion tons on Earth." },
+            { category: "Math", text: "A googol is the number 1 followed by 100 zeros." },
+            { category: "Science", text: "Some fungi produce their own light through a chemical process called bioluminescence." },
+            { category: "Math", text: "A Möbius strip has one continuous side and one continuous edge." }
+        ];
+        let lastFactIndex = -1;
+
+        menuToggle.addEventListener("click", () => {
+            const isOpen = menuToggle.getAttribute("aria-expanded") === "true";
+            menuToggle.setAttribute("aria-expanded", String(!isOpen));
+            menuToggle.setAttribute("aria-label", isOpen ? "Open navigation" : "Close navigation");
+            navLinks.classList.toggle("is-open", !isOpen);
+        });
+
+        navLinks.addEventListener("click", (event) => {
+            if (event.target.closest("a")) {
+                navLinks.classList.remove("is-open");
+                menuToggle.setAttribute("aria-expanded", "false");
+                menuToggle.setAttribute("aria-label", "Open navigation");
+            }
+        });
+
+        surpriseButton.addEventListener("click", () => {
+            const availableIndexes = extraFacts
+                .map((_, index) => index)
+                .filter((index) => index !== lastFactIndex);
+            const nextIndex = availableIndexes[Math.floor(Math.random() * availableIndexes.length)];
+            lastFactIndex = nextIndex;
+            const fact = extraFacts[nextIndex];
+            surpriseFact.replaceChildren();
+
+            const label = document.createElement("strong");
+            label.textContent = `${fact.category} surprise: `;
+            surpriseFact.append(label, document.createTextNode(fact.text));
+        });
+
+        document.querySelector("#current-year").textContent = new Date().getFullYear();
+    </script>
+</body>
+</html>

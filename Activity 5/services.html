@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#252720">
+    <meta name="description" content="Explore architectural design services, from early site and concept studies to thoughtful material and spatial decisions.">
+    <title>Services — FORM &amp; FIELD Architecture</title>
+    <style>
+        :root {
+            color-scheme: light;
+            --ink: #282a24;
+            --paper: #f4f2ec;
+            --muted: #73746a;
+            --accent: #cbd1ae;
+            --line: rgba(40, 42, 36, .16);
+            font-family: "Segoe UI", Arial, sans-serif;
+            font-synthesis: none;
+            text-rendering: optimizeLegibility;
+        }
+
+        * { box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body { min-width: 320px; margin: 0; color: var(--ink); background: var(--paper); }
+        a { color: inherit; }
+
+        .container { width: min(1240px, calc(100% - 88px)); margin-inline: auto; }
+
+        .site-header {
+            position: absolute;
+            z-index: 2;
+            inset: 0 0 auto;
+            color: #fff;
+        }
+        .navbar {
+            min-height: 88px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 1px solid rgba(255, 255, 255, .27);
+        }
+        .brand {
+            display: inline-flex;
+            align-items: center;
+            gap: 11px;
+            color: inherit;
+            font-size: .76rem;
+            font-weight: 700;
+            letter-spacing: .15em;
+            line-height: 1.35;
+            text-decoration: none;
+        }
+        .brand-mark {
+            width: 34px;
+            height: 34px;
+            display: grid;
+            place-items: center;
+            border: 1px solid rgba(255, 255, 255, .75);
+            border-radius: 50%;
+            font-family: Georgia, "Times New Roman", serif;
+            font-size: 1rem;
+            font-weight: 400;
+            letter-spacing: 0;
+        }
+        .nav-links { display: flex; align-items: center; gap: 34px; }
+        .nav-links a {
+            color: rgba(255, 255, 255, .86);
+            font-size: .75rem;
+            font-weight: 650;
+            letter-spacing: .09em;
+            text-decoration: none;
+            transition: color .2s ease;
+        }
+        .nav-links a:hover, .nav-links a[aria-current="page"] { color: var(--accent); }
+        .menu-toggle {
+            display: none;
+            width: 42px;
+            height: 42px;
+            padding: 9px;
+            border: 1px solid rgba(255, 255, 255, .6);
+            border-radius: 50%;
+            color: #fff;
+            background: transparent;
+            cursor: pointer;
+        }
+        .menu-toggle span { display: block; height: 1px; margin: 5px 0; background: currentColor; }
+
+        .hero {
+            position: relative;
+            min-height: max(650px, min(760px, 100svh));
+            display: flex;
+            align-items: end;
+            overflow: hidden;
+            color: #fff;
+            background: #45483c;
+            isolation: isolate;
+        }
+        .hero-image, .hero::after { position: absolute; z-index: -1; inset: 0; width: 100%; height: 100%; }
+        .hero-image { object-fit: cover; object-position: center 48%; }
+        .hero::after {
+            background:
+                linear-gradient(90deg, rgba(23, 26, 21, .78) 0%, rgba(23, 26, 21, .55) 43%, rgba(23, 26, 21, .13) 100%),
+                linear-gradient(0deg, rgba(23, 26, 21, .73) 0%, rgba(23, 26, 21, .08) 72%);
+            content: "";
+        }
+        .hero-content { width: min(820px, 85%); padding-block: 180px 115px; }
+        .eyebrow, .section-label {
+            display: flex;
+            align-items: center;
+            gap: 11px;
+            margin: 0 0 22px;
+            font-size: .67rem;
+            font-weight: 700;
+            letter-spacing: .19em;
+            text-transform: uppercase;
+        }
+        .eyebrow { color: var(--accent); }
+        .eyebrow::before, .section-label::before { width: 27px; height: 1px; background: currentColor; content: ""; }
+        h1, h2, h3, p { margin-top: 0; }
+        h1 {
+            max-width: 800px;
+            margin-bottom: 22px;
+            font-family: Georgia, "Times New Roman", serif;
+            font-size: clamp(4.2rem, 9vw, 8rem);
+            font-weight: 400;
+            letter-spacing: -.075em;
+            line-height: .91;
+        }
+        h1 em { color: var(--accent); font-weight: 400; }
+        .hero-copy { max-width: 520px; margin-bottom: 30px; color: rgba(255, 255, 255, .84); font-size: 1rem; line-height: 1.8; }
+        .hero-link {
+            display: inline-flex;
+            min-height: 49px;
+            align-items: center;
+            gap: 18px;
+            padding: 0 19px;
+            border: 1px solid var(--accent);
+            color: var(--ink);
+            background: var(--accent);
+            font-size: .74rem;
+            font-weight: 700;
+            letter-spacing: .08em;
+            text-decoration: none;
+            transition: color .2s ease, background .2s ease;
+        }
+        .hero-link:hover { color: #fff; background: transparent; }
+        .hero-caption {
+            position: absolute;
+            right: 35px;
+            bottom: 34px;
+            color: rgba(255, 255, 255, .8);
+            font-size: .64rem;
+            letter-spacing: .16em;
+            text-transform: uppercase;
+            writing-mode: vertical-rl;
+        }
+
+        .services { padding-block: 100px 108px; scroll-margin-top: 25px; }
+        .section-head { display: flex; align-items: end; justify-content: space-between; gap: 35px; margin-bottom: 42px; }
+        .section-label { margin-bottom: 14px; color: #777b62; }
+        h2 {
+            margin-bottom: 0;
+            font-family: Georgia, "Times New Roman", serif;
+            font-size: clamp(2.5rem, 5vw, 4.4rem);
+            font-weight: 400;
+            letter-spacing: -.06em;
+            line-height: 1.04;
+        }
+        .section-intro { max-width: 370px; margin: 0 0 4px; color: var(--muted); font-size: .9rem; line-height: 1.75; }
+        .service-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); border-top: 1px solid var(--line); }
+        .service-card { min-height: 265px; padding: 27px 34px 30px 0; }
+        .service-card:nth-child(2n) { padding-left: 34px; border-left: 1px solid var(--line); }
+        .service-card:nth-child(n + 3) { border-top: 1px solid var(--line); }
+        .service-number { display: block; margin-bottom: 27px; color: #777b62; font-size: .67rem; font-weight: 700; letter-spacing: .16em; }
+        .service-card h3 {
+            margin-bottom: 12px;
+            font-family: Georgia, "Times New Roman", serif;
+            font-size: clamp(1.65rem, 2.7vw, 2.3rem);
+            font-weight: 400;
+            letter-spacing: -.04em;
+        }
+        .service-card p { max-width: 470px; margin-bottom: 0; color: var(--muted); font-size: .9rem; line-height: 1.8; }
+
+        .process { padding-block: 82px 94px; color: var(--paper); background: var(--ink); }
+        .process .section-label { color: var(--accent); }
+        .process-heading { margin-bottom: 39px; }
+        .process-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); border-top: 1px solid rgba(255, 255, 255, .22); }
+        .process-step { min-height: 205px; padding: 25px 28px 0 0; }
+        .process-step + .process-step { padding-left: 28px; border-left: 1px solid rgba(255, 255, 255, .22); }
+        .process-number { display: block; margin-bottom: 27px; color: var(--accent); font-size: .68rem; font-weight: 700; letter-spacing: .15em; }
+        .process-step h3 { margin-bottom: 11px; font-family: Georgia, "Times New Roman", serif; font-size: 1.55rem; font-weight: 400; }
+        .process-step p { max-width: 320px; margin: 0; color: rgba(244, 242, 236, .67); font-size: .86rem; line-height: 1.75; }
+
+        .contact { padding-block: 79px 87px; }
+        .contact-inner { display: flex; align-items: end; justify-content: space-between; gap: 30px; }
+        .contact h2 { max-width: 650px; }
+        .contact-link {
+            flex-shrink: 0;
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid var(--ink);
+            font-size: .75rem;
+            font-weight: 700;
+            letter-spacing: .08em;
+            text-decoration: none;
+        }
+        .site-footer { padding-block: 25px; color: rgba(255, 255, 255, .72); background: #1c1e19; }
+        .footer-inner { display: flex; align-items: center; justify-content: space-between; gap: 18px; }
+        .footer-inner p { margin: 0; font-size: .68rem; letter-spacing: .06em; }
+        .footer-brand { color: #fff; }
+        :focus-visible { outline: 2px solid var(--accent); outline-offset: 5px; }
+
+        @media (max-width: 760px) {
+            .container { width: min(100% - 44px, 600px); }
+            .navbar { min-height: 74px; }
+            .menu-toggle { display: block; }
+            .nav-links {
+                position: absolute;
+                top: calc(100% + 1px);
+                right: 22px;
+                left: 22px;
+                display: none;
+                align-items: stretch;
+                gap: 0;
+                padding: 9px 16px;
+                border: 1px solid rgba(255, 255, 255, .22);
+                background: rgba(31, 33, 28, .97);
+            }
+            .nav-links.is-open { display: flex; flex-direction: column; }
+            .nav-links a { padding: 13px 4px; }
+            .hero { min-height: max(650px, 90svh); }
+            .hero-image { object-position: 47% center; }
+            .hero::after {
+                background:
+                    linear-gradient(90deg, rgba(23, 26, 21, .78), rgba(23, 26, 21, .3)),
+                    linear-gradient(0deg, rgba(23, 26, 21, .73), transparent 70%);
+            }
+            .hero-content { width: 100%; padding-block: 145px 115px; }
+            .hero-caption { right: 17px; bottom: 27px; }
+            .services { padding-block: 76px 82px; }
+            .section-head { align-items: flex-start; flex-direction: column; gap: 16px; margin-bottom: 27px; }
+            .service-grid { grid-template-columns: 1fr; }
+            .service-card, .service-card:nth-child(2n) { min-height: 0; padding: 24px 0 29px; border-left: 0; }
+            .service-card + .service-card { border-top: 1px solid var(--line); }
+            .service-number { margin-bottom: 19px; }
+            .process { padding-block: 67px 72px; }
+            .process-grid { grid-template-columns: 1fr; }
+            .process-step, .process-step + .process-step { min-height: 0; padding: 23px 0; border-left: 0; }
+            .process-step + .process-step { border-top: 1px solid rgba(255, 255, 255, .22); }
+            .process-number { margin-bottom: 16px; }
+            .contact-inner { align-items: flex-start; flex-direction: column; }
+        }
+        @media (max-width: 460px) {
+            .hero { min-height: 680px; }
+            h1 { font-size: clamp(3.8rem, 17vw, 5.2rem); }
+            .footer-inner { align-items: flex-start; flex-direction: column; }
+        }
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after { scroll-behavior: auto !important; transition-duration: .01ms !important; }
+        }
+    </style>
+</head>
+<body>
+    <header class="site-header">
+        <nav class="navbar container" aria-label="Main navigation">
+            <a class="brand" href="home.html" aria-label="FORM and FIELD home">
+                <span class="brand-mark" aria-hidden="true">F</span>
+                <span>FORM &amp; FIELD<br>ARCHITECTURE</span>
+            </a>
+            <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="nav-links" aria-label="Open navigation">
+                <span></span>
+                <span></span>
+            </button>
+            <div class="nav-links" id="nav-links">
+                <a href="home.html">Home</a>
+                <a href="home.html#studio">Studio</a>
+                <a href="blogs.html">Field notes</a>
+                <a href="#services" aria-current="page">Services</a>
+                <a href="home.html#contact">Contact</a>
+            </div>
+        </nav>
+    </header>
+
+    <main id="top">
+        <section class="hero" aria-labelledby="page-title">
+            <img class="hero-image" src="image5.jpg" alt="Aerial view of a landscaped garden with curving paths, planted beds, and gathering spaces">
+            <div class="container">
+                <div class="hero-content">
+                    <p class="eyebrow">FORM &amp; FIELD / SERVICES</p>
+                    <h1 id="page-title">Spaces shaped<br><em>with care.</em></h1>
+                    <p class="hero-copy">Explore a considered design process, from understanding a place to shaping the spaces, materials, and details that belong there.</p>
+                    <a class="hero-link" href="#services">Explore our services <span aria-hidden="true">↘</span></a>
+                </div>
+            </div>
+            <span class="hero-caption" aria-hidden="true">Place · Space · Detail</span>
+        </section>
+
+        <section class="services container" id="services" aria-labelledby="services-title">
+            <div class="section-head">
+                <div>
+                    <p class="section-label">What we consider</p>
+                    <h2 id="services-title">Design, from the ground up.</h2>
+                </div>
+                <p class="section-intro">A thoughtful project takes shape through connected decisions. These areas offer a way to begin the conversation.</p>
+            </div>
+            <div class="service-grid">
+                <article class="service-card">
+                    <span class="service-number">01 / SITE &amp; CONTEXT</span>
+                    <h3>Understanding the place</h3>
+                    <p>Look at the site, its landscape, light, approaches, and existing character to establish a meaningful starting point for design.</p>
+                </article>
+                <article class="service-card">
+                    <span class="service-number">02 / CONCEPT &amp; SPACE</span>
+                    <h3>Shaping the idea</h3>
+                    <p>Develop an overall direction for how spaces relate, how people move through them, and how the design responds to its setting.</p>
+                </article>
+                <article class="service-card">
+                    <span class="service-number">03 / MATERIAL &amp; LIGHT</span>
+                    <h3>Choosing what you experience</h3>
+                    <p>Consider surfaces, textures, openings, and daylight as part of the atmosphere and everyday use of a space.</p>
+                </article>
+                <article class="service-card">
+                    <span class="service-number">04 / DETAIL &amp; CONNECTION</span>
+                    <h3>Bringing parts together</h3>
+                    <p>Pay attention to transitions and the way elements meet, helping the larger idea feel coherent at a human scale.</p>
+                </article>
+            </div>
+        </section>
+
+        <section class="process" aria-labelledby="process-title">
+            <div class="container">
+                <div class="process-heading">
+                    <p class="section-label">A considered process</p>
+                    <h2 id="process-title">From first questions to clear direction.</h2>
+                </div>
+                <div class="process-grid">
+                    <article class="process-step">
+                        <span class="process-number">01 / LISTEN</span>
+                        <h3>Understand the brief</h3>
+                        <p>Start with the needs, priorities, and qualities that matter to the people and place involved.</p>
+                    </article>
+                    <article class="process-step">
+                        <span class="process-number">02 / EXPLORE</span>
+                        <h3>Test possibilities</h3>
+                        <p>Explore spatial ideas and material directions in response to the context and the brief.</p>
+                    </article>
+                    <article class="process-step">
+                        <span class="process-number">03 / REFINE</span>
+                        <h3>Bring focus to the design</h3>
+                        <p>Connect the key decisions into a clear design direction, with attention to the overall experience.</p>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <section class="contact container">
+            <div class="contact-inner">
+                <div>
+                    <p class="section-label">Continue exploring</p>
+                    <h2>Good design starts with a closer look.</h2>
+                </div>
+                <a class="contact-link" href="blogs.html">Read our field notes <span aria-hidden="true">↗</span></a>
+            </div>
+        </section>
+    </main>
+
+    <footer class="site-footer">
+        <div class="footer-inner container">
+            <a class="brand footer-brand" href="home.html">
+                <span class="brand-mark" aria-hidden="true">F</span>
+                <span>FORM &amp; FIELD<br>ARCHITECTURE</span>
+            </a>
+            <p>Thoughtful spaces, shaped by place.</p>
+            <p>&copy; <span id="current-year"></span> FORM &amp; FIELD</p>
+        </div>
+    </footer>
+
+    <script>
+        const menuToggle = document.querySelector(".menu-toggle");
+        const navLinks = document.querySelector("#nav-links");
+
+        menuToggle.addEventListener("click", () => {
+            const isOpen = menuToggle.getAttribute("aria-expanded") === "true";
+            menuToggle.setAttribute("aria-expanded", String(!isOpen));
+            menuToggle.setAttribute("aria-label", isOpen ? "Open navigation" : "Close navigation");
+            navLinks.classList.toggle("is-open", !isOpen);
+        });
+
+        navLinks.addEventListener("click", (event) => {
+            if (event.target.closest("a")) {
+                navLinks.classList.remove("is-open");
+                menuToggle.setAttribute("aria-expanded", "false");
+                menuToggle.setAttribute("aria-label", "Open navigation");
+            }
+        });
+
+        document.querySelector("#current-year").textContent = new Date().getFullYear();
+    </script>
+</body>
+</html>

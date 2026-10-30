@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#252720">
+    <meta name="description" content="Field notes on architecture, materials, natural light, and the relationship between buildings and their setting.">
+    <title>Field Notes — FORM &amp; FIELD Architecture</title>
+    <style>
+        :root {
+            color-scheme: light;
+            --ink: #282a24;
+            --paper: #f4f2ec;
+            --muted: #73746a;
+            --accent: #cbd1ae;
+            --line: rgba(40, 42, 36, .16);
+            font-family: "Segoe UI", Arial, sans-serif;
+            font-synthesis: none;
+            text-rendering: optimizeLegibility;
+        }
+
+        * { box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body { min-width: 320px; margin: 0; color: var(--ink); background: var(--paper); }
+        a { color: inherit; }
+
+        .container { width: min(1240px, calc(100% - 88px)); margin-inline: auto; }
+
+        .site-header {
+            position: absolute;
+            z-index: 2;
+            inset: 0 0 auto;
+            color: #fff;
+        }
+
+        .navbar {
+            min-height: 88px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 1px solid rgba(255, 255, 255, .27);
+        }
+
+        .brand {
+            display: inline-flex;
+            align-items: center;
+            gap: 11px;
+            color: inherit;
+            font-size: .76rem;
+            font-weight: 700;
+            letter-spacing: .15em;
+            line-height: 1.35;
+            text-decoration: none;
+        }
+
+        .brand-mark {
+            width: 34px;
+            height: 34px;
+            display: grid;
+            place-items: center;
+            border: 1px solid rgba(255, 255, 255, .75);
+            border-radius: 50%;
+            font-family: Georgia, "Times New Roman", serif;
+            font-size: 1rem;
+            font-weight: 400;
+            letter-spacing: 0;
+        }
+
+        .nav-links { display: flex; align-items: center; gap: 34px; }
+        .nav-links a {
+            color: rgba(255, 255, 255, .86);
+            font-size: .75rem;
+            font-weight: 650;
+            letter-spacing: .09em;
+            text-decoration: none;
+            transition: color .2s ease;
+        }
+        .nav-links a:hover, .nav-links a[aria-current="page"] { color: var(--accent); }
+
+        .menu-toggle {
+            display: none;
+            width: 42px;
+            height: 42px;
+            padding: 9px;
+            border: 1px solid rgba(255, 255, 255, .6);
+            border-radius: 50%;
+            color: #fff;
+            background: transparent;
+            cursor: pointer;
+        }
+        .menu-toggle span { display: block; height: 1px; margin: 5px 0; background: currentColor; }
+
+        .hero {
+            position: relative;
+            min-height: max(650px, min(760px, 100svh));
+            display: flex;
+            align-items: end;
+            overflow: hidden;
+            color: #fff;
+            background: #47493d;
+            isolation: isolate;
+        }
+        .hero-image, .hero::after { position: absolute; z-index: -1; inset: 0; width: 100%; height: 100%; }
+        .hero-image { object-fit: cover; object-position: center 52%; }
+        .hero::after {
+            background:
+                linear-gradient(90deg, rgba(24, 27, 22, .8) 0%, rgba(24, 27, 22, .56) 42%, rgba(24, 27, 22, .12) 100%),
+                linear-gradient(0deg, rgba(24, 27, 22, .72) 0%, rgba(24, 27, 22, .08) 69%);
+            content: "";
+        }
+
+        .hero-content { width: min(810px, 85%); padding-block: 180px 115px; }
+        .eyebrow, .section-label {
+            display: flex;
+            align-items: center;
+            gap: 11px;
+            margin: 0 0 22px;
+            font-size: .67rem;
+            font-weight: 700;
+            letter-spacing: .19em;
+            text-transform: uppercase;
+        }
+        .eyebrow { color: var(--accent); }
+        .eyebrow::before, .section-label::before { width: 27px; height: 1px; background: currentColor; content: ""; }
+
+        h1, h2, h3, p { margin-top: 0; }
+        h1 {
+            max-width: 800px;
+            margin-bottom: 22px;
+            font-family: Georgia, "Times New Roman", serif;
+            font-size: clamp(4.2rem, 9vw, 8rem);
+            font-weight: 400;
+            letter-spacing: -.075em;
+            line-height: .91;
+        }
+        h1 em { color: var(--accent); font-weight: 400; }
+        .hero-copy { max-width: 520px; margin-bottom: 30px; color: rgba(255, 255, 255, .84); font-size: 1rem; line-height: 1.8; }
+        .hero-link {
+            display: inline-flex;
+            min-height: 49px;
+            align-items: center;
+            gap: 18px;
+            padding: 0 19px;
+            border: 1px solid var(--accent);
+            color: var(--ink);
+            background: var(--accent);
+            font-size: .74rem;
+            font-weight: 700;
+            letter-spacing: .08em;
+            text-decoration: none;
+            transition: color .2s ease, background .2s ease;
+        }
+        .hero-link:hover { color: #fff; background: transparent; }
+        .hero-caption {
+            position: absolute;
+            right: 35px;
+            bottom: 34px;
+            color: rgba(255, 255, 255, .8);
+            font-size: .64rem;
+            letter-spacing: .16em;
+            text-transform: uppercase;
+            writing-mode: vertical-rl;
+        }
+
+        .journal { padding-block: 98px 112px; scroll-margin-top: 25px; }
+        .journal-heading { display: flex; align-items: end; justify-content: space-between; gap: 30px; margin-bottom: 38px; }
+        .section-label { margin-bottom: 14px; color: #777b62; }
+        h2 {
+            margin-bottom: 0;
+            font-family: Georgia, "Times New Roman", serif;
+            font-size: clamp(2.5rem, 5vw, 4.4rem);
+            font-weight: 400;
+            letter-spacing: -.06em;
+            line-height: 1.04;
+        }
+        .journal-intro { max-width: 350px; margin: 0 0 4px; color: var(--muted); font-size: .9rem; line-height: 1.75; }
+
+        .story-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); border-top: 1px solid var(--line); }
+        .story-card { min-height: 300px; padding: 25px 28px 27px 0; display: flex; flex-direction: column; align-items: flex-start; }
+        .story-card + .story-card { padding-left: 28px; border-left: 1px solid var(--line); }
+        .story-meta { width: 100%; display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 38px; }
+        .category { color: #70765d; font-size: .67rem; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; }
+        .story-number { color: #88897e; font-size: .68rem; letter-spacing: .12em; }
+        .story-card h3 {
+            max-width: 330px;
+            margin-bottom: 13px;
+            font-family: Georgia, "Times New Roman", serif;
+            font-size: clamp(1.55rem, 2.4vw, 2.15rem);
+            font-weight: 400;
+            letter-spacing: -.04em;
+            line-height: 1.1;
+        }
+        .story-card p { margin-bottom: 24px; color: var(--muted); font-size: .88rem; line-height: 1.75; }
+        .read-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 11px;
+            margin-top: auto;
+            color: var(--ink);
+            font-size: .72rem;
+            font-weight: 700;
+            letter-spacing: .08em;
+            text-decoration: none;
+        }
+        .read-link span { transition: transform .2s ease; }
+        .read-link:hover span { transform: translateX(4px); }
+
+        .reading { padding-block: 78px 100px; color: var(--paper); background: var(--ink); }
+        .reading-heading { margin-bottom: 30px; }
+        .reading .section-label { color: var(--accent); }
+        .reading-list { border-top: 1px solid rgba(255, 255, 255, .23); }
+        .reading-article {
+            display: grid;
+            grid-template-columns: 170px minmax(0, 1fr);
+            gap: 7%;
+            padding-block: 36px 40px;
+            border-bottom: 1px solid rgba(255, 255, 255, .23);
+            scroll-margin-top: 30px;
+        }
+        .article-index { padding-top: 7px; color: var(--accent); font-size: .68rem; font-weight: 700; letter-spacing: .15em; }
+        .reading-article h3 {
+            margin-bottom: 16px;
+            font-family: Georgia, "Times New Roman", serif;
+            font-size: clamp(1.8rem, 3vw, 2.65rem);
+            font-weight: 400;
+            letter-spacing: -.045em;
+        }
+        .reading-article p { max-width: 700px; margin-bottom: 13px; color: rgba(244, 242, 236, .73); font-size: .91rem; line-height: 1.85; }
+        .reading-article p:last-child { margin-bottom: 0; }
+
+        .site-footer { padding-block: 25px; color: rgba(255, 255, 255, .72); background: #1c1e19; }
+        .footer-inner { display: flex; align-items: center; justify-content: space-between; gap: 18px; }
+        .footer-inner p { margin: 0; font-size: .68rem; letter-spacing: .06em; }
+        .footer-brand { color: #fff; }
+
+        :focus-visible { outline: 2px solid var(--accent); outline-offset: 5px; }
+
+        @media (max-width: 760px) {
+            .container { width: min(100% - 44px, 600px); }
+            .navbar { min-height: 74px; }
+            .menu-toggle { display: block; }
+            .nav-links {
+                position: absolute;
+                top: calc(100% + 1px);
+                right: 22px;
+                left: 22px;
+                display: none;
+                align-items: stretch;
+                gap: 0;
+                padding: 9px 16px;
+                border: 1px solid rgba(255, 255, 255, .22);
+                background: rgba(31, 33, 28, .97);
+            }
+            .nav-links.is-open { display: flex; flex-direction: column; }
+            .nav-links a { padding: 13px 4px; }
+            .hero { min-height: max(650px, 90svh); }
+            .hero-image { object-position: 47% center; }
+            .hero::after {
+                background:
+                    linear-gradient(90deg, rgba(24, 27, 22, .77), rgba(24, 27, 22, .27)),
+                    linear-gradient(0deg, rgba(24, 27, 22, .72), transparent 70%);
+            }
+            .hero-content { width: 100%; padding-block: 145px 115px; }
+            .hero-caption { right: 17px; bottom: 27px; }
+            .journal { padding-block: 75px 82px; }
+            .journal-heading { align-items: flex-start; flex-direction: column; gap: 16px; margin-bottom: 27px; }
+            .story-grid { grid-template-columns: 1fr; }
+            .story-card, .story-card + .story-card { min-height: 0; padding: 23px 0 28px; border-left: 0; }
+            .story-card + .story-card { border-top: 1px solid var(--line); }
+            .story-meta { margin-bottom: 22px; }
+            .story-card p { margin-bottom: 21px; }
+            .reading { padding-block: 66px 75px; }
+            .reading-article { grid-template-columns: 1fr; gap: 15px; padding-block: 27px 31px; }
+        }
+
+        @media (max-width: 460px) {
+            .hero { min-height: 680px; }
+            h1 { font-size: clamp(3.8rem, 17vw, 5.2rem); }
+            .footer-inner { align-items: flex-start; flex-direction: column; }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after { scroll-behavior: auto !important; transition-duration: .01ms !important; }
+        }
+    </style>
+</head>
+<body>
+    <header class="site-header">
+        <nav class="navbar container" aria-label="Main navigation">
+            <a class="brand" href="home.html" aria-label="FORM and FIELD home">
+                <span class="brand-mark" aria-hidden="true">F</span>
+                <span>FORM &amp; FIELD<br>ARCHITECTURE</span>
+            </a>
+            <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="nav-links" aria-label="Open navigation">
+                <span></span>
+                <span></span>
+            </button>
+            <div class="nav-links" id="nav-links">
+                <a href="home.html">Home</a>
+                <a href="home.html#studio">Studio</a>
+                <a href="#top" aria-current="page">Field notes</a>
+                <a href="home.html#contact">Contact</a>
+            </div>
+        </nav>
+    </header>
+
+    <main id="top">
+        <section class="hero" aria-labelledby="page-title">
+            <img class="hero-image" src="images4.jpg" alt="A hand sketching a site plan beside a detailed architectural landscape model">
+            <div class="container">
+                <div class="hero-content">
+                    <p class="eyebrow">FORM &amp; FIELD / JOURNAL</p>
+                    <h1 id="page-title">Ideas take<br><em>shape.</em></h1>
+                    <p class="hero-copy">Field notes on the choices behind thoughtful spaces: reading a site, working with material, and making room for light.</p>
+                    <a class="hero-link" href="#articles">Explore the stories <span aria-hidden="true">↘</span></a>
+                </div>
+            </div>
+            <span class="hero-caption" aria-hidden="true">Drawing · Place · Possibility</span>
+        </section>
+
+        <section class="journal container" id="articles" aria-labelledby="journal-title">
+            <div class="journal-heading">
+                <div>
+                    <p class="section-label">The journal</p>
+                    <h2 id="journal-title">Notes on making place.</h2>
+                </div>
+                <p class="journal-intro">A collection of short reflections on the details and decisions that shape how a space feels.</p>
+            </div>
+
+            <div class="story-grid">
+                <article class="story-card">
+                    <div class="story-meta"><span class="category">Landscape</span><span class="story-number">01</span></div>
+                    <h3>Begin by listening to the site</h3>
+                    <p>Before drawing a plan, look closely at the setting: its light, edges, approaches, and existing character.</p>
+                    <a class="read-link" href="#article-site">Read the note <span aria-hidden="true">→</span></a>
+                </article>
+                <article class="story-card">
+                    <div class="story-meta"><span class="category">Materials</span><span class="story-number">02</span></div>
+                    <h3>Let material bring warmth</h3>
+                    <p>Surface, texture, and the way materials meet can give a restrained design its richness and detail.</p>
+                    <a class="read-link" href="#article-material">Read the note <span aria-hidden="true">→</span></a>
+                </article>
+                <article class="story-card">
+                    <div class="story-meta"><span class="category">Light</span><span class="story-number">03</span></div>
+                    <h3>Make space for daylight</h3>
+                    <p>Light changes through the day. Openings and transitions can make that movement part of the experience.</p>
+                    <a class="read-link" href="#article-light">Read the note <span aria-hidden="true">→</span></a>
+                </article>
+            </div>
+        </section>
+
+        <section class="reading" aria-labelledby="reading-title">
+            <div class="container">
+                <div class="reading-heading">
+                    <p class="section-label">From the notebook</p>
+                    <h2 id="reading-title">Three ways of looking.</h2>
+                </div>
+                <div class="reading-list">
+                    <article class="reading-article" id="article-site">
+                        <span class="article-index">01 / LANDSCAPE</span>
+                        <div>
+                            <h3>Begin by listening to the site</h3>
+                            <p>Every place has its own conditions. The slope underfoot, the direction of the sun, the shelter of trees, and the way someone arrives all offer clues about what might belong there.</p>
+                            <p>Paying attention before making decisions can lead to architecture that feels connected to its surroundings, rather than simply placed on top of them.</p>
+                        </div>
+                    </article>
+                    <article class="reading-article" id="article-material">
+                        <span class="article-index">02 / MATERIALS</span>
+                        <div>
+                            <h3>Let material bring warmth</h3>
+                            <p>Materials are more than a finish. Their grain, weight, texture, and changing appearance shape how a room is experienced, from a first glance to the feel of a surface in daily use.</p>
+                            <p>When a small group of materials is chosen with care, their contrasts and connections can give a space a quiet, lasting character.</p>
+                        </div>
+                    </article>
+                    <article class="reading-article" id="article-light">
+                        <span class="article-index">03 / LIGHT</span>
+                        <div>
+                            <h3>Make space for daylight</h3>
+                            <p>Daylight is never quite still. It shifts in direction and softness, tracing the passage of time across a wall, a floor, or a place to sit.</p>
+                            <p>Thinking about those changes early can help openings, thresholds, and rooms work together to make natural light part of everyday life.</p>
+                        </div>
+                    </article>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="site-footer">
+        <div class="footer-inner container">
+            <a class="brand footer-brand" href="home.html">
+                <span class="brand-mark" aria-hidden="true">F</span>
+                <span>FORM &amp; FIELD<br>ARCHITECTURE</span>
+            </a>
+            <p>Thoughtful spaces, shaped by place.</p>
+            <p>&copy; <span id="current-year"></span> FORM &amp; FIELD</p>
+        </div>
+    </footer>
+
+    <script>
+        const menuToggle = document.querySelector(".menu-toggle");
+        const navLinks = document.querySelector("#nav-links");
+
+        menuToggle.addEventListener("click", () => {
+            const isOpen = menuToggle.getAttribute("aria-expanded") === "true";
+            menuToggle.setAttribute("aria-expanded", String(!isOpen));
+            menuToggle.setAttribute("aria-label", isOpen ? "Open navigation" : "Close navigation");
+            navLinks.classList.toggle("is-open", !isOpen);
+        });
+
+        navLinks.addEventListener("click", (event) => {
+            if (event.target.closest("a")) {
+                navLinks.classList.remove("is-open");
+                menuToggle.setAttribute("aria-expanded", "false");
+                menuToggle.setAttribute("aria-label", "Open navigation");
+            }
+        });
+
+        document.querySelector("#current-year").textContent = new Date().getFullYear();
+    </script>
+</body>
+</html>

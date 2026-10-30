@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#e8f5e4">
+    <meta name="description" content="Sign in to your account.">
+    <title>Sign in | Miel</title>
+    <style>
+        :root {
+            color-scheme: light;
+            --forest: #174a35;
+            --green: #34754c;
+            --leaf: #78b66b;
+            --ink: #203a2c;
+            --muted: #63786a;
+            --line: rgba(26, 76, 48, .17);
+            --paper: #fcfdf9;
+            font-family: "Segoe UI", Arial, sans-serif;
+            font-synthesis: none;
+            text-rendering: optimizeLegibility;
+        }
+
+        * { box-sizing: border-box; }
+
+        body {
+            min-width: 320px;
+            min-height: 100vh;
+            margin: 0;
+            display: grid;
+            place-items: center;
+            padding: 32px 18px;
+            color: var(--ink);
+            background:
+                radial-gradient(ellipse at 10% 10%, rgba(255, 255, 255, .7), transparent 34%),
+                linear-gradient(135deg, #f5fbf1 0%, #e5f3e0 48%, #cce7c5 100%);
+        }
+
+        a { color: inherit; }
+
+        .page {
+            width: min(100%, 960px);
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, .8);
+            border-radius: 26px;
+            background: rgba(252, 253, 249, .92);
+            box-shadow: 0 28px 80px rgba(35, 82, 48, .14);
+        }
+
+        .topbar {
+            min-height: 74px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding-inline: 38px;
+            border-bottom: 1px solid rgba(26, 76, 48, .1);
+        }
+
+        .brand {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            color: var(--forest);
+            font-size: 1.08rem;
+            font-weight: 750;
+            letter-spacing: -.035em;
+            text-decoration: none;
+        }
+
+        .brand-mark {
+            display: grid;
+            width: 36px;
+            height: 36px;
+            place-items: center;
+            border-radius: 12px;
+            color: white;
+            background: var(--forest);
+            font-family: Georgia, "Times New Roman", serif;
+            font-size: 1.05rem;
+        }
+
+        .brand-dot { color: var(--leaf); }
+
+        .top-note {
+            margin: 0;
+            color: var(--muted);
+            font-size: .86rem;
+        }
+
+        .content {
+            min-height: 530px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+        }
+
+        .welcome {
+            position: relative;
+            display: flex;
+            min-height: 530px;
+            flex-direction: column;
+            justify-content: space-between;
+            overflow: hidden;
+            padding: 46px 42px;
+            color: white;
+            background:
+                radial-gradient(ellipse at 74% 23%, rgba(229, 248, 199, .55), transparent 27%),
+                linear-gradient(150deg, #8cc27b 0%, #579764 48%, #205b42 100%);
+        }
+
+        .welcome::before,
+        .welcome::after {
+            position: absolute;
+            right: -86px;
+            bottom: 55px;
+            width: 320px;
+            height: 320px;
+            border: 1px solid rgba(255, 255, 255, .25);
+            border-radius: 50%;
+            box-shadow: 0 0 0 24px rgba(255, 255, 255, .08), 0 0 0 48px rgba(255, 255, 255, .06);
+            content: "";
+        }
+
+        .welcome::after {
+            right: 37px;
+            bottom: 178px;
+            width: 95px;
+            height: 145px;
+            border: 0;
+            border-radius: 100% 0 100% 0;
+            background: linear-gradient(145deg, rgba(237, 250, 218, .7), rgba(237, 250, 218, .1));
+            box-shadow: none;
+            transform: rotate(35deg);
+        }
+
+        .welcome-copy, .welcome-foot { position: relative; z-index: 1; }
+
+        .eyebrow {
+            margin-bottom: 17px;
+            color: rgba(255, 255, 255, .84);
+            font-size: .72rem;
+            font-weight: 750;
+            letter-spacing: .15em;
+        }
+
+        .welcome h1 {
+            max-width: 360px;
+            margin: 0 0 16px;
+            font-family: Georgia, "Times New Roman", serif;
+            font-size: clamp(2.7rem, 5vw, 4.15rem);
+            font-weight: 400;
+            letter-spacing: -.06em;
+            line-height: .99;
+        }
+
+        .welcome-copy p:last-child {
+            max-width: 330px;
+            margin: 0;
+            color: rgba(255, 255, 255, .86);
+            font-size: .96rem;
+            line-height: 1.75;
+        }
+
+        .welcome-foot {
+            margin: 24px 0 0;
+            color: rgba(255, 255, 255, .75);
+            font-size: .79rem;
+        }
+
+        .form-side {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 48px 42px;
+        }
+
+        .form-wrap { width: min(100%, 350px); }
+
+        .form-wrap h2 {
+            margin: 0 0 9px;
+            color: var(--forest);
+            font-family: Georgia, "Times New Roman", serif;
+            font-size: 2.25rem;
+            font-weight: 400;
+            letter-spacing: -.045em;
+        }
+
+        .form-intro {
+            margin: 0 0 29px;
+            color: var(--muted);
+            font-size: .92rem;
+            line-height: 1.6;
+        }
+
+        .field { margin-bottom: 18px; }
+
+        .field label {
+            display: block;
+            margin-bottom: 8px;
+            color: var(--ink);
+            font-size: .84rem;
+            font-weight: 650;
+        }
+
+        .field input {
+            width: 100%;
+            min-height: 48px;
+            padding: 0 14px;
+            border: 1px solid var(--line);
+            border-radius: 11px;
+            outline: none;
+            color: var(--ink);
+            background: #fff;
+            font: inherit;
+            font-size: .91rem;
+            transition: border-color .2s ease, box-shadow .2s ease;
+        }
+
+        .field input::placeholder { color: #97a59a; }
+
+        .field input:focus {
+            border-color: #68a273;
+            box-shadow: 0 0 0 3px rgba(104, 162, 115, .17);
+        }
+
+        .password-wrap { position: relative; }
+        .password-wrap input { padding-right: 72px; }
+
+        .show-password {
+            position: absolute;
+            top: 50%;
+            right: 12px;
+            padding: 5px 3px;
+            transform: translateY(-50%);
+            border: 0;
+            color: var(--green);
+            background: transparent;
+            font: inherit;
+            font-size: .78rem;
+            font-weight: 700;
+            cursor: pointer;
+        }
+
+        .form-options {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            margin: 1px 0 22px;
+            font-size: .81rem;
+        }
+
+        .remember {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--muted);
+            cursor: pointer;
+        }
+
+        .remember input {
+            width: 15px;
+            height: 15px;
+            margin: 0;
+            accent-color: var(--green);
+        }
+
+        .help-link {
+            color: var(--green);
+            font-weight: 650;
+            text-decoration: none;
+        }
+
+        .help-link:hover { text-decoration: underline; }
+
+        .submit-button {
+            width: 100%;
+            min-height: 49px;
+            border: 0;
+            border-radius: 12px;
+            color: white;
+            background: var(--forest);
+            font: inherit;
+            font-size: .93rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: transform .2s ease, background .2s ease;
+        }
+
+        .submit-button:hover { transform: translateY(-1px); background: var(--green); }
+        .submit-button:active { transform: translateY(0); }
+
+        .form-message {
+            min-height: 20px;
+            margin: 13px 0 0;
+            color: #80562b;
+            font-size: .82rem;
+            line-height: 1.5;
+        }
+
+        .form-footnote {
+            margin: 21px 0 0;
+            color: #849187;
+            font-size: .75rem;
+            line-height: 1.6;
+            text-align: center;
+        }
+
+        :focus-visible { outline: 3px solid #75a969; outline-offset: 3px; }
+
+        @media (max-width: 700px) {
+            .page { width: min(100%, 460px); border-radius: 22px; }
+            .topbar { min-height: 65px; padding-inline: 22px; }
+            .content { grid-template-columns: 1fr; }
+            .welcome { min-height: 245px; padding: 29px 27px; }
+            .welcome h1 { max-width: 330px; font-size: 3rem; }
+            .welcome-copy p:last-child { max-width: 360px; font-size: .9rem; }
+            .welcome-foot { margin-top: 20px; }
+            .welcome::before { right: -139px; bottom: -190px; }
+            .welcome::after { right: 46px; bottom: 29px; }
+            .form-side { padding: 34px 27px 37px; }
+            .form-wrap h2 { font-size: 2rem; }
+        }
+
+        @media (max-width: 390px) {
+            .top-note { font-size: .76rem; }
+            .form-options { align-items: flex-start; flex-direction: column; }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                scroll-behavior: auto !important;
+                transition-duration: .01ms !important;
+            }
+        }
+    </style>
+</head>
+<body>
+    <main class="page">
+        <header class="topbar">
+            <a class="brand" href="home.html" aria-label="Miel's home page">
+                <span class="brand-mark" aria-hidden="true">M</span>
+                <span>Miel<span class="brand-dot">.</span></span>
+            </a>
+            <p class="top-note">A good place to begin.</p>
+        </header>
+
+        <div class="content">
+            <section class="welcome" aria-labelledby="welcome-title">
+                <div class="welcome-copy">
+                    <p class="eyebrow">WELCOME BACK</p>
+                    <h1 id="welcome-title">Your next chapter starts here.</h1>
+                    <p>Sign in to continue to your learning corner and discover something new.</p>
+                </div>
+                <p class="welcome-foot">Curiosity makes everything grow.</p>
+            </section>
+
+            <section class="form-side" aria-labelledby="form-title">
+                <div class="form-wrap">
+                    <h2 id="form-title">Sign in</h2>
+                    <p class="form-intro">Enter your email and password to continue.</p>
+                    <form id="login-form">
+                        <div class="field">
+                            <label for="email">Email address</label>
+                            <input id="email" name="email" type="email" autocomplete="username" placeholder="you@example.com" required>
+                        </div>
+                        <div class="field">
+                            <label for="password">Password</label>
+                            <div class="password-wrap">
+                                <input id="password" name="password" type="password" autocomplete="current-password" placeholder="Enter your password" required>
+                                <button class="show-password" id="toggle-password" type="button" aria-pressed="false" aria-label="Show password">Show</button>
+                            </div>
+                        </div>
+                        <div class="form-options">
+                            <label class="remember" for="remember">
+                                <input id="remember" name="remember" type="checkbox">
+                                <span>Remember me</span>
+                            </label>
+                            <a class="help-link" href="home.html">Back to home</a>
+                        </div>
+                        <button class="submit-button" type="submit">Sign in</button>
+                        <p class="form-message" id="form-message" role="status" aria-live="polite"></p>
+                    </form>
+                    <p class="form-footnote">This is a front-end demo. Sign-in requires a secure authentication service.</p>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <script>
+        const passwordInput = document.querySelector("#password");
+        const passwordToggle = document.querySelector("#toggle-password");
+        const loginForm = document.querySelector("#login-form");
+        const formMessage = document.querySelector("#form-message");
+
+        passwordToggle.addEventListener("click", () => {
+            const shouldShow = passwordInput.type === "password";
+            passwordInput.type = shouldShow ? "text" : "password";
+            passwordToggle.textContent = shouldShow ? "Hide" : "Show";
+            passwordToggle.setAttribute("aria-pressed", String(shouldShow));
+            passwordToggle.setAttribute("aria-label", shouldShow ? "Hide password" : "Show password");
+        });
+
+        loginForm.addEventListener("submit", (event) => {
+            event.preventDefault();
+            formMessage.textContent = "This demo is not connected to an authentication service, so no sign-in was attempted.";
+        });
+    </script>
+</body>
+</html>

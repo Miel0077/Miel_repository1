@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#252720">
+    <meta name="description" content="Explore a considered approach to architecture, place, materials, and the spaces made for everyday life.">
+    <title>FORM &amp; FIELD — Architecture</title>
+    <style>
+        :root {
+            color-scheme: light;
+            --ink: #202720;
+            --forest: #25392f;
+            --moss: #78866d;
+            --paper: #f4f2eb;
+            --white: #fffefa;
+            --line: rgba(32, 39, 32, .16);
+            font-family: "Segoe UI", Arial, sans-serif;
+            font-synthesis: none;
+            text-rendering: optimizeLegibility;
+        }
+
+        * { box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body { margin: 0; color: var(--ink); background: var(--paper); }
+        a { color: inherit; }
+
+        .container {
+            width: min(1200px, calc(100% - 64px));
+            margin-inline: auto;
+        }
+
+        .site-header {
+            position: absolute;
+            z-index: 5;
+            top: 0;
+            right: 0;
+            left: 0;
+            color: var(--white);
+        }
+
+        .navigation {
+            min-height: 88px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 1px solid rgba(255, 255, 255, .3);
+        }
+
+        .brand {
+            display: inline-flex;
+            align-items: center;
+            gap: 11px;
+            color: inherit;
+            font-size: .92rem;
+            font-weight: 700;
+            letter-spacing: .16em;
+            text-decoration: none;
+        }
+
+        .brand-mark {
+            display: grid;
+            width: 35px;
+            height: 35px;
+            place-items: center;
+            border: 1px solid rgba(255, 255, 255, .75);
+            border-radius: 50%;
+            font-family: Georgia, "Times New Roman", serif;
+            font-size: 1.1rem;
+            font-weight: 400;
+            letter-spacing: 0;
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 34px;
+        }
+
+        .nav-links a {
+            color: rgba(255, 255, 255, .9);
+            font-size: .82rem;
+            text-decoration: none;
+            transition: color .2s ease;
+        }
+
+        .nav-links a:hover,
+        .nav-links a:focus-visible { color: #d4dfc8; }
+
+        .nav-links .nav-cta {
+            padding: 11px 17px;
+            border: 1px solid rgba(255, 255, 255, .65);
+            border-radius: 999px;
+        }
+
+        .menu-toggle {
+            display: none;
+            width: 42px;
+            height: 42px;
+            padding: 10px;
+            border: 1px solid rgba(255, 255, 255, .6);
+            border-radius: 50%;
+            color: white;
+            background: transparent;
+            cursor: pointer;
+        }
+
+        .menu-toggle span {
+            display: block;
+            height: 1px;
+            margin: 5px 0;
+            background: currentColor;
+        }
+
+        .hero {
+            position: relative;
+            min-height: 740px;
+            display: flex;
+            align-items: center;
+            overflow: hidden;
+            color: white;
+            background-color: #334239;
+            background-image:
+                linear-gradient(90deg, rgba(21, 32, 26, .78) 0%, rgba(21, 32, 26, .48) 47%, rgba(21, 32, 26, .12) 100%),
+                linear-gradient(0deg, rgba(18, 27, 22, .48), rgba(18, 27, 22, .06) 55%, rgba(18, 27, 22, .16)),
+                url("images.jpg");
+            background-position: center;
+            background-size: cover;
+        }
+
+        .hero-inner {
+            width: min(1200px, calc(100% - 64px));
+            margin: 88px auto 0;
+        }
+
+        .eyebrow {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin: 0 0 25px;
+            color: rgba(255, 255, 255, .85);
+            font-size: .7rem;
+            font-weight: 650;
+            letter-spacing: .2em;
+            text-transform: uppercase;
+        }
+
+        .eyebrow::before {
+            width: 29px;
+            height: 1px;
+            background: #d5dfc8;
+            content: "";
+        }
+
+        h1, h2, h3, p { margin-top: 0; }
+
+        h1 {
+            max-width: 790px;
+            margin-bottom: 24px;
+            font-family: Georgia, "Times New Roman", serif;
+            font-size: clamp(3.8rem, 8.5vw, 7.5rem);
+            font-weight: 400;
+            letter-spacing: -.065em;
+            line-height: .91;
+        }
+
+        h1 span { color: #d5dfc8; font-style: italic; }
+
+        .hero-description {
+            max-width: 430px;
+            margin-bottom: 32px;
+            color: rgba(255, 255, 255, .84);
+            font-size: 1rem;
+            line-height: 1.8;
+        }
+
+        .hero-link {
+            display: inline-flex;
+            min-height: 48px;
+            align-items: center;
+            gap: 18px;
+            padding: 0 19px;
+            border: 1px solid rgba(255, 255, 255, .72);
+            border-radius: 999px;
+            color: white;
+            font-size: .83rem;
+            text-decoration: none;
+            transition: color .2s ease, background .2s ease;
+        }
+
+        .hero-link:hover { color: var(--forest); background: white; }
+        .hero-link span { font-size: 1.1rem; }
+
+        .hero-caption {
+            position: absolute;
+            right: max(32px, calc((100vw - 1200px) / 2));
+            bottom: 35px;
+            margin: 0;
+            color: rgba(255, 255, 255, .8);
+            font-size: .68rem;
+            letter-spacing: .12em;
+            text-transform: uppercase;
+        }
+
+        .section { padding-block: 112px; scroll-margin-top: 30px; }
+
+        .intro {
+            display: grid;
+            grid-template-columns: .7fr 1.3fr;
+            gap: 70px;
+            align-items: start;
+        }
+
+        .section-kicker {
+            margin: 9px 0 0;
+            color: #687763;
+            font-size: .7rem;
+            font-weight: 700;
+            letter-spacing: .16em;
+            text-transform: uppercase;
+        }
+
+        h2 {
+            margin-bottom: 22px;
+            color: var(--forest);
+            font-family: Georgia, "Times New Roman", serif;
+            font-size: clamp(2.5rem, 5vw, 4.4rem);
+            font-weight: 400;
+            letter-spacing: -.055em;
+            line-height: 1.04;
+        }
+
+        .intro-copy p {
+            max-width: 620px;
+            margin-bottom: 0;
+            color: #60675f;
+            font-size: 1.04rem;
+            line-height: 1.85;
+        }
+
+        .approach {
+            color: var(--white);
+            background: var(--forest);
+        }
+
+        .approach .section-kicker { color: #c4d0b8; }
+        .approach h2 { max-width: 700px; color: var(--white); }
+
+        .approach-intro {
+            display: flex;
+            align-items: end;
+            justify-content: space-between;
+            gap: 40px;
+            margin-bottom: 56px;
+        }
+
+        .approach-intro > p {
+            max-width: 365px;
+            margin: 0 0 7px;
+            color: rgba(255, 255, 255, .72);
+            font-size: .93rem;
+            line-height: 1.8;
+        }
+
+        .service-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            border-top: 1px solid rgba(255, 255, 255, .24);
+        }
+
+        .service-card {
+            padding: 27px 27px 0 0;
+        }
+
+        .service-card + .service-card {
+            padding-left: 27px;
+            border-left: 1px solid rgba(255, 255, 255, .24);
+        }
+
+        .service-number {
+            display: block;
+            margin-bottom: 31px;
+            color: #c4d0b8;
+            font-size: .72rem;
+            letter-spacing: .12em;
+        }
+
+        .service-card h3 {
+            margin-bottom: 12px;
+            font-family: Georgia, "Times New Roman", serif;
+            font-size: 1.5rem;
+            font-weight: 400;
+        }
+
+        .service-card p {
+            max-width: 290px;
+            margin-bottom: 0;
+            color: rgba(255, 255, 255, .68);
+            font-size: .88rem;
+            line-height: 1.75;
+        }
+
+        .closing {
+            display: flex;
+            align-items: end;
+            justify-content: space-between;
+            gap: 32px;
+            padding-block: 95px;
+        }
+
+        .closing h2 { max-width: 650px; margin-bottom: 0; }
+        .closing .section-kicker { margin-bottom: 18px; }
+
+        .contact-link {
+            flex: 0 0 auto;
+            display: inline-flex;
+            align-items: center;
+            gap: 15px;
+            padding-bottom: 9px;
+            border-bottom: 1px solid var(--ink);
+            font-size: .88rem;
+            text-decoration: none;
+        }
+
+        .site-footer {
+            padding-block: 24px;
+            border-top: 1px solid var(--line);
+        }
+
+        .footer-inner {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 20px;
+        }
+
+        .footer-inner p {
+            margin: 0;
+            color: #697068;
+            font-size: .76rem;
+        }
+
+        .footer-brand { color: var(--forest); font-size: .76rem; }
+        .footer-brand .brand-mark {
+            width: 29px;
+            height: 29px;
+            border-color: var(--forest);
+            font-size: .9rem;
+        }
+
+        :focus-visible { outline: 3px solid #a7b995; outline-offset: 4px; }
+
+        @media (max-width: 760px) {
+            .container, .hero-inner { width: min(100% - 40px, 560px); }
+            .navigation { min-height: 72px; }
+            .menu-toggle { display: block; }
+            .nav-links {
+                position: absolute;
+                top: 80px;
+                right: 20px;
+                left: 20px;
+                display: none;
+                align-items: stretch;
+                gap: 0;
+                padding: 10px;
+                border: 1px solid rgba(255, 255, 255, .25);
+                border-radius: 14px;
+                background: rgba(37, 57, 47, .97);
+            }
+            .nav-links.is-open { display: flex; flex-direction: column; }
+            .nav-links a { padding: 13px; }
+            .nav-links .nav-cta { margin-top: 5px; text-align: center; }
+            .hero { min-height: 690px; background-position: 57% center; }
+            .hero-inner { margin-top: 70px; }
+            .hero-caption { right: 20px; bottom: 22px; }
+            .section { padding-block: 78px; }
+            .intro { grid-template-columns: 1fr; gap: 26px; }
+            .approach-intro { align-items: flex-start; flex-direction: column; gap: 6px; margin-bottom: 38px; }
+            .service-grid { grid-template-columns: 1fr; }
+            .service-card, .service-card + .service-card {
+                padding: 22px 0;
+                border-left: 0;
+                border-bottom: 1px solid rgba(255, 255, 255, .24);
+            }
+            .service-number { margin-bottom: 17px; }
+            .closing { align-items: flex-start; flex-direction: column; gap: 25px; }
+        }
+
+        @media (max-width: 480px) {
+            .hero { min-height: 650px; }
+            h1 { font-size: clamp(3.5rem, 17vw, 5rem); }
+            .footer-inner { align-items: flex-start; flex-direction: column; }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                scroll-behavior: auto !important;
+                transition-duration: .01ms !important;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="site-header">
+        <nav class="navigation container" aria-label="Main navigation">
+            <a class="brand" href="#home" aria-label="FORM and FIELD home">
+                <span class="brand-mark" aria-hidden="true">F</span>
+                <span>FORM &amp; FIELD<br>ARCHITECTURE</span>
+            </a>
+            <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="nav-links" aria-label="Open navigation">
+                <span></span>
+                <span></span>
+            </button>
+            <div class="nav-links" id="nav-links">
+                <a href="#home" aria-current="page">Home</a>
+                <a href="#studio">Studio</a>
+                <a href="services.html">Services</a>
+                <a href="blogs.html">Field notes</a>
+                <a class="nav-cta" href="#approach">Our approach <span aria-hidden="true">↘</span></a>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <section class="hero" id="home" aria-labelledby="hero-title">
+            <div class="hero-inner">
+                <p class="eyebrow">FORM &amp; FIELD / ARCHITECTURE</p>
+                <h1 id="hero-title">Spaces shaped<br>for <span>living.</span></h1>
+                <p class="hero-description">Thoughtful architecture begins with a close look at place, light, materials, and the everyday experiences a space can hold.</p>
+                <a class="hero-link" href="#studio">Explore the studio <span aria-hidden="true">↓</span></a>
+            </div>
+            <p class="hero-caption">Place · Light · Everyday life</p>
+        </section>
+
+        <section class="section container intro" id="studio" aria-labelledby="studio-title">
+            <p class="section-kicker">A considered practice</p>
+            <div class="intro-copy">
+                <h2 id="studio-title">Good architecture starts with paying attention.</h2>
+                <p>Architecture can bring people and their surroundings into closer conversation. Looking carefully at context, light, materials, and daily routines offers a thoughtful starting point for shaping space.</p>
+            </div>
+        </section>
+
+        <section class="section approach" id="approach" aria-labelledby="approach-title">
+            <div class="container">
+                <div class="approach-intro">
+                    <div>
+                        <p class="section-kicker">What guides us</p>
+                        <h2 id="approach-title">Design with a sense of place.</h2>
+                    </div>
+                    <p>Every project is an opportunity to make everyday experiences more meaningful, welcoming, and connected.</p>
+                </div>
+                <div class="service-grid">
+                    <article class="service-card">
+                        <span class="service-number">01 / CONTEXT</span>
+                        <h3>Begin by listening</h3>
+                        <p>Begin with the site, its surroundings, and the people who will use the space.</p>
+                    </article>
+                    <article class="service-card">
+                        <span class="service-number">02 / CRAFT</span>
+                        <h3>Make every detail matter</h3>
+                        <p>Bring materials, light, and proportion together with clarity and care.</p>
+                    </article>
+                    <article class="service-card">
+                        <span class="service-number">03 / CONNECTION</span>
+                        <h3>Design for daily life</h3>
+                        <p>Consider the everyday and how a space can connect with its surroundings.</p>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <section class="closing container" aria-labelledby="closing-title">
+            <div>
+                <p class="section-kicker">A thoughtful point of view</p>
+                <h2 id="closing-title">The places we make shape the way we live.</h2>
+            </div>
+            <a class="contact-link" href="services.html">Explore services <span aria-hidden="true">↗</span></a>
+        </section>
+    </main>
+
+    <footer class="site-footer">
+        <div class="footer-inner container">
+            <a class="brand footer-brand" href="#home" aria-label="FORM and FIELD home">
+                <span class="brand-mark" aria-hidden="true">F</span>
+                <span>FORM &amp; FIELD<br>ARCHITECTURE</span>
+            </a>
+            <p>Thoughtful spaces, shaped by place.</p>
+            <p>&copy; <span id="current-year"></span> FORM &amp; FIELD</p>
+        </div>
+    </footer>
+
+    <script>
+        const menuToggle = document.querySelector(".menu-toggle");
+        const navLinks = document.querySelector("#nav-links");
+
+        menuToggle.addEventListener("click", () => {
+            const isOpen = menuToggle.getAttribute("aria-expanded") === "true";
+            menuToggle.setAttribute("aria-expanded", String(!isOpen));
+            menuToggle.setAttribute("aria-label", isOpen ? "Open navigation" : "Close navigation");
+            navLinks.classList.toggle("is-open", !isOpen);
+        });
+
+        navLinks.addEventListener("click", (event) => {
+            if (event.target.closest("a")) {
+                navLinks.classList.remove("is-open");
+                menuToggle.setAttribute("aria-expanded", "false");
+                menuToggle.setAttribute("aria-label", "Open navigation");
+            }
+        });
+
+        document.querySelector("#current-year").textContent = new Date().getFullYear();
+    </script>
+</body>
+</html>
